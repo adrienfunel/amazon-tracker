@@ -14,7 +14,6 @@ def main():
 
     product_name = soup.find(id='productTitle').get_text()
     price = soup.find(id='priceblock_ourprice').get_text()
-    # price_float = float(price[1:])
     print(price)
 
 
