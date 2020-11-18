@@ -1,4 +1,11 @@
 import smtplib
+from configparser import ConfigParser
+
+parser = ConfigParser()
+parser.read('envvars.ini')
+
+EMAIL = parser.get('envvars', 'EMAIL_ADDRESS')
+print(EMAIL)
 
 def email_service():
 	server = smtplib.SMTP('smtp.gmail.com', 587)
