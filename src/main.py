@@ -1,5 +1,6 @@
 import requests
 from bs4 import BeautifulSoup
+import re
 
 from mail_app import email_service
 
@@ -14,12 +15,12 @@ def main():
 
     product_name = soup.find(id='productTitle').get_text()
     price = soup.find(id='priceblock_ourprice').get_text()
-    print(price)
-
+    price_float = re.findall(r'\d+\.\d+', str(price))[0]
+    price_currency = price[0].encode('utf-8').strip()
 
     if product_name and price:
-    	email_service(product_name.strip(), URL, price.encode('utf-8').strip())
+        email_service(product_name.strip(), URL, price_float, price_currency)
 
 
 if __name__ == "__main__":
-	main()
+    main()
