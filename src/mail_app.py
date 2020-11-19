@@ -8,7 +8,7 @@ EMAIL = parser.get('envvars', 'EMAIL_ADDRESS')
 PWD = parser.get('envvars', 'EMAIL_PASSWORD')
 
 
-def email_service(name, url, price):
+def email_service(name, url, price, currency):
 
 	server = smtplib.SMTP('smtp.gmail.com', 587)
 	server.ehlo()
@@ -18,15 +18,15 @@ def email_service(name, url, price):
 
 	server.sendmail(EMAIL,
 		EMAIL,
-		message_builder(name, url, price))
+		message_builder(name, url, price, currency))
 
 	print('email sent')
 	server.quit()
 
 
-def message_builder(name, url, price):
+def message_builder(name, url, price, currency):
 
-	subject = f'Price update on Amazon website for {name}, now down to {price.encode('utf-8')}'
+	subject = f'Price update on Amazon website for {name}, now down to {currency}{price}'
 	body = f'Check the link: {url}'
 	msg = f'Subject: {subject}\n\n{body}'
 
