@@ -5,7 +5,6 @@ import re
 from constants import URL, headers
 from mail_app import email_service
 
-
 def main():
 
     page = requests.get(URL, headers=headers)
@@ -13,11 +12,10 @@ def main():
 
     product_name = soup.find(id='productTitle').get_text()
     price = soup.find(id='priceblock_ourprice').get_text()
+    price_currency = soup.find("div", {"id": "cerberus-data-metrics"})['data-asin-currency-code']
     price_value = re.findall(r'\d+\.\d+', price)[0]
-    # price_currency = price[0].encode('utf-8').strip()
-    price_currency = 'GBP'
 
-    if product_name and price and float(price_value) < 50:
+    if product_name and price and float(price_value) < 60:
         email_service(product_name.strip(), URL, price_value, price_currency)
 
 
