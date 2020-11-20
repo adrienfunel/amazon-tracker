@@ -1,22 +1,14 @@
-import requests
-from bs4 import BeautifulSoup
-import re
-
 from constants import URL, headers
 from mail_app import email_service
+from apps import get_soup, extract_pricing_data
 
 
 def main():
+    """This is the main endpoint."""
+    soup = get_soup(URL, headers)
+    product_name, price_value, price_currency = extract_pricing_data(soup)
 
-    page = requests.get(URL, headers=headers)
-    soup = BeautifulSoup(page.content, 'html.parser')
-
-    product_name = soup.find(id='productTitle').get_text()
-    price = soup.find(id='priceblock_ourprice').get_text()
-    price_currency = soup.find('div', {'id': 'cerberus-data-metrics'})['data-asin-currency-code']
-    price_value = re.findall(r'\d+\.\d+', price)[0]
-
-    if product_name and price and float(price_value) < 60:
+    if product_name and price_value and float(price_value) < 60:
         email_service(product_name.strip(), URL, price_value, price_currency)
 
 
