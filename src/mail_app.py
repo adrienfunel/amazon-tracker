@@ -1,6 +1,7 @@
 import smtplib
 from configparser import ConfigParser
 
+
 parser = ConfigParser()
 parser.read('envvars.ini')
 
