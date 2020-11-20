@@ -10,7 +10,7 @@ PWD = parser.get('envvars', 'EMAIL_PASSWORD')
 
 
 def email_service(name, url, price, currency):
-
+    """Connect to mailing server and send bespoke update email."""
     server = ServerConnection(EMAIL, PWD).start_connection()
 
     server.sendmail(EMAIL,
@@ -23,7 +23,7 @@ def email_service(name, url, price, currency):
 
 
 def message_builder(name, url, price, currency):
-
+    """Build message with input information."""
     subject = f'Price update on Amazon website for {name}, now down to {currency}{price}'
     body = f'Check the link: {url}'
     msg = f'Subject: {subject}\n\n{body}'
@@ -32,7 +32,7 @@ def message_builder(name, url, price, currency):
 
 
 class ServerConnection:
-
+    """Class to create a server connection object using credentials."""
     def __init__(self, email, pwd):
         self.email = email
         self.pwd = pwd
