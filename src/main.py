@@ -1,6 +1,7 @@
 from constants import URL, headers
 from mail_app import email_service
 from apps import get_soup, extract_pricing_data
+from time import perf_counter
 
 
 def main():
@@ -13,4 +14,10 @@ def main():
 
 
 if __name__ == '__main__':
+    start = perf_counter()
+
     main()
+
+    end = perf_counter()
+    elapsed = end - start
+    print(f"Elapsed time in seconds {elapsed:0.2f}")
